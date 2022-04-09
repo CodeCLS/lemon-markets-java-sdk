@@ -1,6 +1,6 @@
 jobs: 
   publish: 
-    name: Publish
+    name: publish
     runs-on: ubuntu-latest
     steps: 
       - 
