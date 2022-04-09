@@ -38,3 +38,17 @@ nexusPublishing {
         }
     }
 }
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'Repo'
+            url = layout.buildDirectory.dir("repo")
+        }
+    }
+}
