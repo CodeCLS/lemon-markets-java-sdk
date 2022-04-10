@@ -40,8 +40,8 @@ TradingEnvironment.LIVE
 ```java
    
 TradingApplication tradingApplication = new TradingApplication.Builder()
-.setEnvironment(TradingEnvironment.PAPER)
-.setToken("<TOKEN>");
+    .setEnvironment(TradingEnvironment.PAPER)
+    .setToken("<TOKEN>");
 
    ```
 3. __Start coding__
