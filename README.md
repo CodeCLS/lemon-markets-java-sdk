@@ -9,31 +9,39 @@ I hope you enjoy it.
 
 <H3>__build.gradle implementation(Jitpack):__</H3>
 ```groovy
+
 allprojects {
 repositories {
     maven { url 'https://jitpack.io' }
     }
 }
+
 ```
 
 ```groovy
+
 dependencies {
     implementation 'com.github.CodeCLS:Lemon-Markets-Java-SDK:1.0.0.0'
 }
+
 ```
 <H3>__Setup Environment & Token__</H3>
 1. __Choose your environment (Paper/Live)__
 ```Java
+
 TradingEnvironment.PAPER)
 TradingEnvironment.LIVE)
+
    ```     
 2. __Enter your token__
 
 ```java
+   
 TradingApplication tradingApplication = new TradingApplication.Builder()
 .setEnvironment(TradingEnvironment.PAPER)
 .setToken("<TOKEN>");
-```
+
+   ```
 3. __Start coding__
    
    __*PositionsRepository*__ > Retrieve all your positions
