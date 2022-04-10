@@ -3,6 +3,7 @@ package Stock;
 import Exceptions.StockBodyEmptyException;
 import Exceptions.UnsuccessfulException;
 import Trading.ApiService;
+import Trading.ApiServiceData;
 import Trading.TradingApplication;
 import models.ContentPackage;
 import okhttp3.ResponseBody;
@@ -16,11 +17,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.io.IOException;
 
 public class StockApiConnection {
-    public static String BASE_URL = "https://data.lemon.markets/v1/";
     private final String token;
-    private ApiService service;
+    private ApiServiceData service;
     public StockApiConnection() {
-        service = TradingApplication.instance.service;
+        service = TradingApplication.instance.serviceData;
         token =  TradingApplication.instance.token;
 
     }

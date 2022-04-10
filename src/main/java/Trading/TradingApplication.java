@@ -16,6 +16,9 @@ public class TradingApplication {
     public String token;
     public ApiService service;
     private TradingEnvironment tradingEnvironment;
+    private Retrofit retrofitData;
+    public ApiServiceData serviceData;
+
     public static class Builder{
         private static String BASE_URL = "";
         private final TradingApplication application;
@@ -38,7 +41,13 @@ public class TradingApplication {
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
+            application.retrofitData = new Retrofit.Builder()
+                    .baseUrl(DATA_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .build();
             application.service = application.retrofit.create(ApiService.class);
+            application.serviceData = application.retrofitData.create(ApiServiceData.class);
 
             return application;
         }
