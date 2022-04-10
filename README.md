@@ -7,7 +7,7 @@ However, I enjoyed the API so much, that I decided to create a simple SDK for Ja
 I hope you enjoy it.
 
 
-<H3>__build.gradle implementation(Jitpack):__</H3>
+<H3>build.gradle implementation(Jitpack):</H3>
 
 ```groovy
 allprojects {
