@@ -1,6 +1,7 @@
 package Order;
 
-import Exceptions.StockBodyEmptyException;
+import Exceptions.ApplicationNotInstantiated;
+import Exceptions.BodyEmptyException;
 import Exceptions.UnsuccessfulException;
 import Order.OrderTypes.FutureOrder;
 import Tools.DateUtil;
@@ -11,17 +12,17 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import java.io.IOException;
-import java.util.Locale;
 
 public class OrderApiConnection {
-    private final String token;
+    private String token;
     private ApiService service;
     public OrderApiConnection() {
+        if (TradingApplication.instance == null){
+            System.err.println(new ApplicationNotInstantiated().getMessage());
+            return;
+        }
         service = TradingApplication.instance.service;
         token =  TradingApplication.instance.token;
     }
@@ -50,7 +51,7 @@ public class OrderApiConnection {
                         }
                     }
                     else{
-                        contentPackage.setException(new StockBodyEmptyException());
+                        contentPackage.setException(new BodyEmptyException());
 
                     }
                 }
@@ -90,7 +91,7 @@ public class OrderApiConnection {
                         }
                     }
                     else{
-                        contentPackage.setException(new StockBodyEmptyException());
+                        contentPackage.setException(new BodyEmptyException());
 
                     }
                 }

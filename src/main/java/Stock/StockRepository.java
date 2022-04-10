@@ -1,10 +1,6 @@
 package Stock;
 
-import Exceptions.ApplicationNotInstantiated;
-import Exceptions.StockBodyEmptyException;
-import Exceptions.UnsuccessfulException;
 import Trading.TradingApplication;
-import Trading.TradingEnvironment;
 import models.ContentPackage;
 
 public class StockRepository {

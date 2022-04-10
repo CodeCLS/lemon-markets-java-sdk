@@ -1,8 +1,8 @@
 package Stock;
 
-import Exceptions.StockBodyEmptyException;
+import Exceptions.ApplicationNotInstantiated;
+import Exceptions.BodyEmptyException;
 import Exceptions.UnsuccessfulException;
-import Trading.ApiService;
 import Trading.ApiServiceData;
 import Trading.TradingApplication;
 import models.ContentPackage;
@@ -10,22 +10,23 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import java.io.IOException;
 
 public class StockApiConnection {
-    private final String token;
+    private String token;
     private ApiServiceData service;
     public StockApiConnection() {
+        if (TradingApplication.instance == null){
+            System.err.println(new ApplicationNotInstantiated().getMessage());
+            return;
+        }
         service = TradingApplication.instance.serviceData;
         token =  TradingApplication.instance.token;
 
     }
     public void getStockViaSearch(String query,ContentPackage.ApiAsyncReturn apiAsyncReturn)
-            throws StockBodyEmptyException, UnsuccessfulException{
+            throws BodyEmptyException, UnsuccessfulException{
         ContentPackage contentPackage = new ContentPackage();
         service.getStockViaSearch(query,"Bearer " + token).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -44,7 +45,7 @@ public class StockApiConnection {
                         }
                     }
                     else{
-                        contentPackage.setException(new StockBodyEmptyException());
+                        contentPackage.setException(new BodyEmptyException());
 
                     }
                 }
