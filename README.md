@@ -17,9 +17,9 @@ repositories {
 ```
 
 ```groovy
-	dependencies {
-	        implementation 'com.github.CodeCLS:Lemon-Markets-Java-SDK:1.0.0.0'
-	}
+dependencies {
+    implementation 'com.github.CodeCLS:Lemon-Markets-Java-SDK:1.0.0.0'
+}
 ```
 
 
