@@ -8,8 +8,8 @@ I hope you enjoy it.
 
 
 <H3>__build.gradle implementation(Jitpack):__</H3>
-```groovy
 
+```groovy
 allprojects {
 repositories {
     maven { url 'https://jitpack.io' }
@@ -26,7 +26,9 @@ dependencies {
 
 ```
 <H3>__Setup Environment & Token__</H3>
+
 1. __Choose your environment (Paper/Live)__
+
 ```Java
 
 TradingEnvironment.PAPER)
