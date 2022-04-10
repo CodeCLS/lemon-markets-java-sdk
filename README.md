@@ -31,8 +31,8 @@ dependencies {
 
 ```Java
 
-TradingEnvironment.PAPER)
-TradingEnvironment.LIVE)
+TradingEnvironment.PAPER
+TradingEnvironment.LIVE
 
    ```     
 2. __Enter your token__
