@@ -34,6 +34,7 @@ public class OrderApiConnection {
     public void placeOrder(FutureOrder order, ContentPackage.ApiAsyncReturn apiAsyncReturn)
     {
         ContentPackage contentPackage = new ContentPackage();
+        System.out.println(" " + order.getIsin() + " " +DateUtil.convertMillisToDate(order.getExpiresAt()) + " " + order.getSide().toString().toLowerCase() + " "+order.getAmountShares()+" " +order.getVenue().getMic() );
         service.placeOrder(order.getIsin(),
                 DateUtil.convertMillisToDate(order.getExpiresAt())+"",
                 order.getSide().toString().toLowerCase()+"",
@@ -115,4 +116,7 @@ public class OrderApiConnection {
         });
 
     }
+
+
+
 }

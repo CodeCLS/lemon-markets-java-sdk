@@ -25,4 +25,6 @@ public interface OrderApiService {
     })
     @POST("orders/{id}/activate/")
     Call<ResponseBody> activateOrder(@Path("id") String id,@Header("Authorization") String s);
+    @POST("positions/")
+    Call<ResponseBody> getPositions(@Header("Authorization") String s);
 }
