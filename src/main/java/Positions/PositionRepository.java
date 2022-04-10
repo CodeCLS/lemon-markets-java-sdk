@@ -12,11 +12,7 @@ public class PositionRepository {
             System.err.println("Please instantiate the TradingApplication before calling this or any other class.");
             return;
         }
-        TradingApplication tradingApplication = TradingApplication.instance;
-        PositionApiConnection.BASE_URL
-                = TradingApplication.instance.getTradingEnvironment() == TradingEnvironment.PAPER
-                ? TradingApplication.PAPER_BASE_URL : TradingApplication.LIVE_BASE_URL;
-        connection = new PositionApiConnection(tradingApplication.token);
+        connection = new PositionApiConnection();
     }
 
 

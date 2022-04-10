@@ -4,6 +4,8 @@ import Exceptions.StockBodyEmptyException;
 import Exceptions.UnsuccessfulException;
 import Order.OrderTypes.FutureOrder;
 import Tools.DateUtil;
+import Trading.ApiService;
+import Trading.TradingApplication;
 import models.ContentPackage;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,19 +19,11 @@ import java.io.IOException;
 import java.util.Locale;
 
 public class OrderApiConnection {
-    public static String BASE_URL = "https://data.lemon.markets/v1/";
-    private static String API_TOKEN;
-    private final Retrofit retrofit;
-    private OrderApiService service;
-    public OrderApiConnection(String token) {
-        API_TOKEN = token;
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        service = retrofit.create(OrderApiService.class);
-
+    private final String token;
+    private ApiService service;
+    public OrderApiConnection() {
+        service = TradingApplication.instance.service;
+        token =  TradingApplication.instance.token;
     }
     public void placeOrder(FutureOrder order, ContentPackage.ApiAsyncReturn apiAsyncReturn)
     {
@@ -39,7 +33,7 @@ public class OrderApiConnection {
                 DateUtil.convertMillisToDate(order.getExpiresAt())+"",
                 order.getSide().toString().toLowerCase()+"",
                 order.getAmountShares()+"",
-                order.getVenue().getMic(),"Bearer " + API_TOKEN).enqueue(new Callback<ResponseBody>() {
+                order.getVenue().getMic(),"Bearer " + token).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response + " Hey: " + response.body());
@@ -80,7 +74,7 @@ public class OrderApiConnection {
 
     public void activateOrder(String id, ContentPackage.ApiAsyncReturn apiAsyncReturn) {
         ContentPackage contentPackage = new ContentPackage();
-        service.activateOrder(id,"Bearer " + API_TOKEN).enqueue(new Callback<ResponseBody>() {
+        service.activateOrder(id,"Bearer " + token).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response + " Hey: " + response.body());

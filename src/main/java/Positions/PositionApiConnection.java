@@ -3,6 +3,8 @@ package Positions;
 import Exceptions.StockBodyEmptyException;
 import Exceptions.UnsuccessfulException;
 import Order.OrderConverter;
+import Trading.ApiService;
+import Trading.TradingApplication;
 import models.ContentPackage;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -15,23 +17,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.io.IOException;
 
 public class PositionApiConnection {
-    public static String BASE_URL = "https://data.lemon.markets/v1/";
-    private static String API_TOKEN;
-    private final Retrofit retrofit;
-    private PositionApiService service;
-    public PositionApiConnection(String token) {
-        API_TOKEN = token;
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        service = retrofit.create(PositionApiService.class);
-
+    private final String token;
+    private ApiService service;
+    public PositionApiConnection() {
+        service = TradingApplication.instance.service;
+        token =  TradingApplication.instance.token;
     }
     public void getPositions(ContentPackage.ApiAsyncReturn apiAsyncReturn) {
         ContentPackage contentPackage = new ContentPackage();
-        service.getPositions("Bearer " + API_TOKEN).enqueue(new Callback<ResponseBody>() {
+        service.getPositions("Bearer " + token ).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {

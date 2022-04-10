@@ -14,10 +14,8 @@ public class OrderRepository {
             return;
         }
         TradingApplication tradingApplication = TradingApplication.instance;
-        OrderApiConnection.BASE_URL
-                = TradingApplication.instance.getTradingEnvironment() == TradingEnvironment.PAPER
-                ? TradingApplication.PAPER_BASE_URL : TradingApplication.LIVE_BASE_URL;
-        connection = new OrderApiConnection(tradingApplication.token);
+
+        connection = new OrderApiConnection();
     }
     public void placeOrder(FutureOrder futureOrder, ContentPackage.ApiAsyncReturn stockApiAsyncReturn){
         try {

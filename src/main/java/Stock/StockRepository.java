@@ -14,10 +14,7 @@ public class StockRepository {
             System.err.println("Please instantiate the TradingApplication before calling this or any other class.");
             return;
         }
-        TradingApplication tradingApplication = TradingApplication.instance;
-        StockApiConnection.BASE_URL
-                = TradingApplication.DATA_BASE_URL;
-        connection = new StockApiConnection(tradingApplication.token);
+        connection = new StockApiConnection();
     }
     public void getStockViaSearch(String searchQueryValue, ContentPackage.ApiAsyncReturn stockApiAsyncReturn){
         try {
