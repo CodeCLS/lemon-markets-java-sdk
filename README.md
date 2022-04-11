@@ -9,6 +9,8 @@ I hope you enjoy it.
 
 <H3>build.gradle implementation(Jitpack):</H3>
 
+<H4>Jitpack implementation</H4>
+
 ```groovy
 
 Gradle.. 
@@ -18,9 +20,13 @@ repositories {
     maven { url 'https://jitpack.io' }
     }
 }
+```
+
+
+
+```groovy
 
 or...Maven...
-
 
 <repositories>
 	<repository>
@@ -31,24 +37,31 @@ or...Maven...
 
 ```
 
-```groovy
 
+<H4>Repo implementation</H4>
+
+
+```groovy
 Gradle...
 
 dependencies {
     implementation 'com.github.CodeCLS:Lemon-Markets-Java-SDK:1.0.0.0'
 }
+```
 
-or...Maven
+
+```groovy
+
+or...Maven...
 
 <dependency>
 	    <groupId>com.github.CodeCLS</groupId>
 	    <artifactId>Lemon-Markets-Java-SDK</artifactId>
 	    <version>Tag</version>
 </dependency>
-
 ```
-<H3>__Setup Environment & Token__</H3>
+
+<H3>Setup Environment & Token</H3>
 
 1. __Choose your environment (Paper/Live)__
 
