@@ -42,6 +42,6 @@ public interface ApiService {
     })
     Call<ResponseBody> getAccount(@Header("Authorization")String s);
     @FormUrlEncoded
-    @POST("withdrawal/")
+    @POST("withdrawals/")
     Call<ResponseBody> withdrawal(@Field("amount") Long amount,@Field("pin") int pin,@Header("Authorization") String s);
 }
