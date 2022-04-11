@@ -1,6 +1,7 @@
 package Account;
 
 import Address.Address;
+import Trading.TradingEnvironment;
 
 public class Account {
     private long createdAt;
@@ -14,7 +15,7 @@ public class Account {
     private String billingEmail;
     private String billingName;
     private String billingVat;
-    private String mode;
+    private TradingEnvironment mode;
     private String depositId;
     private long clientId;
     private long accountNumber;
@@ -40,7 +41,7 @@ public class Account {
                    String lastName, String email, String number,
                    Address address, Address billingAddress,
                    String billingEmail, String billingName,
-                   String billingVat, String mode, String depositId,
+                   String billingVat, TradingEnvironment mode, String depositId,
                    long clientId, long accountNumber,
                    String ibanBrokerage, String ibanOrigin,
                    String bankNameOrigin, Long balance, Long cashToInvest,
@@ -172,11 +173,11 @@ public class Account {
         this.billingVat = billingVat;
     }
 
-    public String getMode() {
+    public TradingEnvironment getMode() {
         return mode;
     }
 
-    public void setMode(String mode) {
+    public void setMode(TradingEnvironment mode) {
         this.mode = mode;
     }
 
@@ -415,7 +416,7 @@ public class Account {
 
         }
 
-        public Builder setMode(String mode) {
+        public Builder setMode(TradingEnvironment mode) {
             account.mode = mode;
             return this;
 

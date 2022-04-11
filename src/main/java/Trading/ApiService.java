@@ -37,5 +37,10 @@ public interface ApiService {
     })
     Call<ResponseBody> getStockViaSearch(@Query("search") String search, @Header("Authorization") String authorization);
 
-
+    @GET("account/")
+    @Headers({
+            "Content-Type: application/json",
+            "Accept: application/json",
+    })
+    Call<ResponseBody> getAccount(@Header("Authorization")String s);
 }

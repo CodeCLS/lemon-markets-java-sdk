@@ -9,7 +9,8 @@ import java.util.stream.Stream;
 
 public enum Plan {
     BASIC,
-    INVALID;
+    INVALID,
+    FREE;
 
     private static final Map<String, Plan> ENUM_MAP = Stream.of(Plan.values())
             .collect(Collectors.toMap(Enum::name, Function.identity()));
