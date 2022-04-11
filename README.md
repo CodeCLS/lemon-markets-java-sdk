@@ -10,19 +10,42 @@ I hope you enjoy it.
 <H3>build.gradle implementation(Jitpack):</H3>
 
 ```groovy
+
+Gradle.. 
+
 allprojects {
 repositories {
     maven { url 'https://jitpack.io' }
     }
 }
 
+or...Maven...
+
+
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+
 ```
 
 ```groovy
 
+Gradle...
+
 dependencies {
     implementation 'com.github.CodeCLS:Lemon-Markets-Java-SDK:1.0.0.0'
 }
+
+or...Maven
+
+<dependency>
+	    <groupId>com.github.CodeCLS</groupId>
+	    <artifactId>Lemon-Markets-Java-SDK</artifactId>
+	    <version>Tag</version>
+</dependency>
 
 ```
 <H3>__Setup Environment & Token__</H3>
@@ -38,7 +61,7 @@ TradingEnvironment.LIVE
 2. __Enter your token__
 
 ```java
-   
+
 TradingApplication tradingApplication = new TradingApplication.Builder()
     .setEnvironment(TradingEnvironment.PAPER)
     .setToken("<TOKEN>");
