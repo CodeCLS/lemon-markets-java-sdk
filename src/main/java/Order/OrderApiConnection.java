@@ -124,5 +124,42 @@ public class OrderApiConnection {
     }
 
 
+    public void getOrders(ContentPackage.ApiAsyncReturn apiAsyncReturn) {
+        ContentPackage contentPackage = new ContentPackage();
+        service.getOrders("Bearer " + token).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println(response + " Hey: " + response.body());
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        try {
+                            String val = response.body().string();
+                            System.out.println("Val:::" + val);
+                            contentPackage.setValue(new OrderConverter().convertArrayJSON(val));
+                        } catch (IOException e) {
+                            contentPackage.setException(e);
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        contentPackage.setException(new BodyEmptyException());
 
+                    }
+                }
+                else{
+                    contentPackage.setException(new UnsuccessfulException());
+                }
+                apiAsyncReturn.getPackage(contentPackage);
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                contentPackage.setException(new Exception(t.getMessage()));
+                apiAsyncReturn.getPackage(contentPackage);
+
+            }
+        });
+
+    }
 }

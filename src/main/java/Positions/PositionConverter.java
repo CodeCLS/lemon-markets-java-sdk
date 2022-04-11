@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 public class PositionConverter {
     public Position convertJSON(String string) {
-        JSONObject jsonObject = new JSONObject(string);
-        JSONObject jsonObject1 = jsonObject.getJSONObject("results");
+        JSONObject jsonObject1 = new JSONObject(string);
         Position.Builder builder =new Position.Builder()
                 .setIsin(jsonObject1.getString("isin"))
                 .setIsinTitle(jsonObject1.getString("isin_title"))

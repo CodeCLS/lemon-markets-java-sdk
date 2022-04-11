@@ -12,6 +12,7 @@ import Trading.TradingApplication;
 import Trading.TradingEnvironment;
 import Venue.Venue;
 import models.ContentPackage;
+import org.junit.jupiter.api.Order;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,23 @@ public class SDKTesting {
         getStockViaSearch();
         getPositions();
         getAccount();
+        getOrders();
 
 
+    }
+
+    private static void getOrders() {
+        new OrderRepository().getOrders(new ContentPackage.ApiAsyncReturn() {
+            @Override
+            public void getPackage(ContentPackage contentPackage) {
+                if (contentPackage.getValue() != null){
+                    System.out.println("Orders: " + ((ArrayList<PlacedOrder>)contentPackage.getValue()).get(0).getIsin());
+                }
+                else{
+                    System.out.println(contentPackage.getException().getMessage());
+                }
+            }
+        });
     }
 
     private static void getPositions() {
@@ -31,7 +47,7 @@ public class SDKTesting {
             public void getPackage(ContentPackage contentPackage) {
                 if (contentPackage.getValue() != null){
                     if ( ((ArrayList<Position>)contentPackage.getValue()).size() != 0) {
-                        System.out.println("Positions: " + ((ArrayList<Position>) contentPackage.getValue()).get(0));
+                        System.out.println("Positions: " + ((ArrayList<Position>) contentPackage.getValue()).get(0).getQuantity());
                     }
                     else
                         System.out.println("Positions: None ");
@@ -83,8 +99,8 @@ public class SDKTesting {
                 .setIsin(((Stock)contentPackage.getValue()).getIsin())
                 .setAmountShares(100)
                 .setExpiresAt(System.currentTimeMillis() + 10000000)
-                .setSide(Side.SELL)
-                .setVenue(((Stock)contentPackage.getValue()).getVenues().get(0))
+                .setSide(Side.BUY)
+                .setVenue(Venue.ofMic("ALLDAY"))
                 .create();
         new OrderRepository().placeOrder(futureOrder, new ContentPackage.ApiAsyncReturn() {
             @Override
