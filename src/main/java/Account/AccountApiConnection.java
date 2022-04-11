@@ -67,4 +67,40 @@ public class AccountApiConnection {
 
     }
 
+    public void withdrawal(Long amount, int pin, ContentPackage.ApiAsyncReturn ApiAsyncReturn) {
+        ContentPackage contentPackage = new ContentPackage();
+        service.withdrawal(amount,pin,"Bearer " + token).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        try {
+                            String val = response.body().string();
+                            contentPackage.setValue(true);
+                        } catch (IOException e) {
+                            contentPackage.setException(e);
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        contentPackage.setException(new BodyEmptyException());
+
+                    }
+                }
+                else{
+                    contentPackage.setException(new UnsuccessfulException());
+                }
+                ApiAsyncReturn.getPackage(contentPackage);
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                contentPackage.setException(new Exception(t.getMessage()));
+                ApiAsyncReturn.getPackage(contentPackage);
+
+            }
+        });
+
+    }
 }
