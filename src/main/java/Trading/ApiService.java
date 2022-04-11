@@ -27,15 +27,13 @@ public interface ApiService {
     })
     @POST("orders/{id}/activate/")
     Call<ResponseBody> activateOrder(@Path("id") String id,@Header("Authorization") String s);
-    @POST("positions/")
-    Call<ResponseBody> getPositions(@Header("Authorization") String s);
 
-    @GET("instruments/")
+    @GET("positions/")
     @Headers({
-            "Content-Type: application/json",
+            "Content-Type: application/x-www-form-urlencoded",
             "Accept: application/json",
     })
-    Call<ResponseBody> getStockViaSearch(@Query("search") String search, @Header("Authorization") String authorization);
+    Call<ResponseBody> getPositions(@Header("Authorization") String s);
 
     @GET("account/")
     @Headers({
@@ -43,4 +41,7 @@ public interface ApiService {
             "Accept: application/json",
     })
     Call<ResponseBody> getAccount(@Header("Authorization")String s);
+    @FormUrlEncoded
+    @GET("withdrawal/")
+    Call<ResponseBody> withdrawal(@Field("amount") Long amount,@Field("pin") int pin,@Header("Authorization") String s);
 }

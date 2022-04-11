@@ -27,4 +27,14 @@ public class AccountRepository {
             e.printStackTrace();
         }
     }
+    public void withdrawal(Long amount, int pin,ContentPackage.ApiAsyncReturn stockApiAsyncReturn){
+        try {
+            connection.withdrawal(amount,pin,stockApiAsyncReturn);
+        } catch (Exception e) {
+            ContentPackage contentPackage = new ContentPackage();
+            contentPackage.setException(e);
+            stockApiAsyncReturn.getPackage(contentPackage);
+            e.printStackTrace();
+        }
+    }
 }

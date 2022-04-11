@@ -29,11 +29,12 @@ public class PositionApiConnection {
         service.getPositions("Bearer " + token ).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-
                         try {
                             String val = response.body().string();
+                            System.out.println("val: " + val);
                             contentPackage.setValue(new PositionConverter().convertArray(val));
                         } catch (IOException e) {
                             contentPackage.setException(e);
