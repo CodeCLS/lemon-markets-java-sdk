@@ -51,13 +51,24 @@ public class OrderApiConnection {
                         }
                     }
                     else{
-                        contentPackage.setException(new BodyEmptyException());
+                        try {
+                            contentPackage.setException(new BodyEmptyException(response.errorBody().string()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            contentPackage.setException(new BodyEmptyException());
+
+                        }
 
                     }
                 }
                 else{
-                    contentPackage.setException(new UnsuccessfulException());
-                }
+                    try {
+                        contentPackage.setException(new UnsuccessfulException(response.errorBody().string()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        contentPackage.setException(new UnsuccessfulException());
+
+                    }                }
                 apiAsyncReturn.getPackage(contentPackage);
 
             }

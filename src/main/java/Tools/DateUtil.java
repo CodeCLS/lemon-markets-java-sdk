@@ -18,13 +18,17 @@ public class DateUtil {
     }
 
     public static Long convertDateToMillis(String expires_at) {
-        String s = expires_at.substring(0,expires_at.indexOf("T"));
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Date date = formatter.parse(s);
-            return date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
+            String s = expires_at.substring(0, expires_at.indexOf("T"));
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = formatter.parse(s);
+                return date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return 0L;
+            }
+        }catch (Exception e){
             return 0L;
         }
     }

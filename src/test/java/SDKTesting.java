@@ -1,3 +1,5 @@
+import Account.Account;
+import Account.AccountRepository;
 import Order.OrderRepository;
 import Order.OrderTypes.FutureOrder;
 import Order.OrderTypes.PlacedOrder;
@@ -30,7 +32,7 @@ public class SDKTesting {
                             .setIsin(((Stock)contentPackage.getValue()).getIsin())
                             .setAmountShares(100)
                             .setExpiresAt(System.currentTimeMillis() + 10000000)
-                            .setSide(Side.BUY)
+                            .setSide(Side.SELL)
                             .setVenue(Venue.ofMic("ALLDAY"))
                             .create();
                     //PLACE ORDER
@@ -56,7 +58,7 @@ public class SDKTesting {
 
                             }
                             else{
-                                System.out.println("Failure placing order");
+                                System.out.println("Failure placing order" + contentPackage.getException().getMessage());
 
                             }
 
@@ -82,6 +84,20 @@ public class SDKTesting {
 
                 else
                     System.out.println("Error: " + contentPackage.getException().getMessage());
+
+            }
+        });
+
+        new AccountRepository().getAccount(new ContentPackage.ApiAsyncReturn() {
+            @Override
+            public void getPackage(ContentPackage contentPackage) {
+                if (contentPackage.getValue() != null){
+                    System.out.println("Account: " + ((Account) contentPackage.getValue()).getAccountId());
+
+                }
+
+                else
+                    System.err.println("ErrorGetAccount: " + contentPackage.getException().getMessage());
 
             }
         });

@@ -52,7 +52,9 @@ TradingApplication tradingApplication = new TradingApplication.Builder()
    
    __*OrderRepository*__ > Buying and selling/Activating 
 
-   __*QuoteRepository*__ > Retrieving information regarding Stock 
+   __*QuoteRepository*__ > Retrieving data for Stocks *UNFINISHED*
+
+   __*AccountRepository*__ > Retrieving data regarding your account
 
 __Example Code__
 
