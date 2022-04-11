@@ -44,4 +44,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("withdrawals/")
     Call<ResponseBody> withdrawal(@Field("amount") Long amount,@Field("pin") int pin,@Header("Authorization") String s);
+    @GET("orders/")
+    @Headers({
+            "Content-Type: application/json",
+            "Accept: application/json",
+    })
+    Call<ResponseBody> getOrders(@Header("Authorization") String s);
 }

@@ -38,5 +38,15 @@ public class OrderRepository {
             e.printStackTrace();
         }
     }
+    public void getOrders(ContentPackage.ApiAsyncReturn apiAsyncReturn) {
+        try {
+            connection.getOrders(apiAsyncReturn);
+        } catch (Exception e) {
+            ContentPackage contentPackage = new ContentPackage();
+            contentPackage.setException(e);
+            apiAsyncReturn.getPackage(contentPackage);
+            e.printStackTrace();
+        }
+    }
 
 }
