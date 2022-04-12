@@ -6,6 +6,7 @@ import Order.OrderTypes.PlacedOrder;
 import Order.Side;
 import Positions.Position;
 import Positions.PositionRepository;
+import RealtimeInstruments.RealtimeRepo;
 import Stock.Stock;
 import Stock.StockRepository;
 import Trading.TradingApplication;
@@ -19,10 +20,11 @@ import java.util.ArrayList;
 public class SDKTesting {
     public static void main(String args[]) {
         initTrading();
-        getStockViaSearch();
-        getPositions();
+        //getStockViaSearch();
+        //getPositions();
         getAccount();
-        getOrders();
+        //getOrders();
+        new RealtimeRepo("acc_qyGJVBBffhzS3HZw0t2kPQPYHwhdyPngT6");
 
 
     }
