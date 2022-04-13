@@ -9,6 +9,7 @@ public class TradingApplication {
     public static final String DATA_BASE_URL = "https://data.lemon.markets/v1/";
     public static final String PAPER_BASE_URL = "https://paper-trading.lemon.markets/v1/";
     public static final String LIVE_BASE_URL = "https://trading.lemon.markets/v1/";
+    public static String account;
 
     private Retrofit retrofit;
 
@@ -51,6 +52,17 @@ public class TradingApplication {
 
             return application;
         }
+
+        /**
+         * Optional setting
+         * RealtimeRepo requires the account id
+         * @param id account id
+         * @return a builder
+         */
+        public Builder setAccountId(String id){
+            this.application.setAccountId(id);
+            return this;
+        }
    }
 
     public TradingEnvironment getTradingEnvironment() {
@@ -67,5 +79,13 @@ public class TradingApplication {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public static String getAccountId() {
+        return account;
+    }
+
+    public static void setAccountId(String account) {
+        TradingApplication.account = account;
     }
 }
