@@ -15,5 +15,10 @@ public interface ApiServiceData {
     })
     Call<ResponseBody> getStockViaSearch(@Query("search") String search, @Header("Authorization") String authorization);
 
-
+    @GET("quotes/latest")
+    @Headers({
+            "Content-Type: application/json",
+            "Accept: application/json",
+    })
+    Call<ResponseBody> getLatestQuotes(String isin, String mic, String s);
 }

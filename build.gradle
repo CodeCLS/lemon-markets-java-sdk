@@ -11,7 +11,7 @@ plugins {
 mainClassName = 'TradingApplication'
 
 group 'io.github.codec'
-version '1.0.0.4'
+version '1.0.0.5'
 
 repositories {
     mavenCentral()
@@ -27,6 +27,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
     implementation 'org.json:json:20171018'
+    implementation 'io.ably:ably-java:1.2.11'
+
 
 }
 

@@ -6,6 +6,10 @@ import Order.OrderTypes.PlacedOrder;
 import Order.Side;
 import Positions.Position;
 import Positions.PositionRepository;
+import Quotes.Quote;
+import Quotes.QuoteApiConnection;
+import Quotes.QuoteRepository;
+import RealtimeInstruments.RealtimeRepo;
 import Stock.Stock;
 import Stock.StockRepository;
 import Trading.TradingApplication;
@@ -19,10 +23,17 @@ import java.util.ArrayList;
 public class SDKTesting {
     public static void main(String args[]) {
         initTrading();
-        getStockViaSearch();
-        getPositions();
-        getAccount();
-        getOrders();
+        //getStockViaSearch();
+        //getPositions();
+        //getAccount();
+        //getOrders();
+        new QuoteRepository().postGetRealTimeQuotes(null, new ContentPackage.ApiAsyncReturn() {
+            @Override
+            public void getPackage(ContentPackage contentPackage) {
+                System.out.println("RealTime: " + ((Quote) contentPackage.getValue()).getAskPrice());
+
+            }
+        });
 
 
     }
@@ -139,7 +150,9 @@ public class SDKTesting {
     private static void initTrading() {
         TradingApplication tradingApplication = new TradingApplication.Builder()
                 .setEnvironment(TradingEnvironment.PAPER)
+                .setAccountId("acc_qyGJVBBffhzS3HZw0t2kPQPYHwhdyPngT6")
                 .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJsZW1vbi5tYXJrZXRzIiwiaXNzIjoibGVtb24ubWFya2V0cyIsInN1YiI6InVzcl9xeUdKVkJCZmYzNDVqWkxHTWwxQzhKdGtRTDFoMTM2TW5wIiwiZXhwIjoxNjgwNzk2ODI1LCJpYXQiOjE2NDkyNjA4MjUsImp0aSI6ImFwa19xeUdKVkJCZ2dNS1hxMnBRWVI1MWdITkR5ZzRDdGc5bWRCIiwibW9kZSI6InBhcGVyIn0.SX0XjITYPGIOY-qPyxF_SWXYrrVchbuchJ-dNagFriw");
+
     }
 
 }
