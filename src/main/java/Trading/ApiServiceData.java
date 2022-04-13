@@ -2,10 +2,7 @@ package Trading;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 public interface ApiServiceData {
     @GET("instruments/")
@@ -14,11 +11,10 @@ public interface ApiServiceData {
             "Accept: application/json",
     })
     Call<ResponseBody> getStockViaSearch(@Query("search") String search, @Header("Authorization") String authorization);
-
     @GET("quotes/latest")
     @Headers({
             "Content-Type: application/json",
             "Accept: application/json",
     })
-    Call<ResponseBody> getLatestQuotes(String isin, String mic, String s);
+    Call<ResponseBody> getLatestQuotes(@Query("isin") String isin,@Query("mic") String mic,@Query("decimals")String  decimal, @Header("Authorization")String s);
 }

@@ -30,7 +30,7 @@ public class QuoteApiConnection {
 
     public void getLatestQuotes(String isin, String mic, ContentPackage.ApiAsyncReturn apiAsyncReturn) {
         ContentPackage contentPackage = new ContentPackage();
-        service.getLatestQuotes(isin,mic,"Bearer " + token).enqueue(new Callback<ResponseBody>() {
+        service.getLatestQuotes(isin,mic,"false","Bearer " + token).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response + " " + response.body());

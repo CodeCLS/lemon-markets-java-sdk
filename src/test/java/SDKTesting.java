@@ -27,10 +27,11 @@ public class SDKTesting {
         //getPositions();
         //getAccount();
         //getOrders();
-        new QuoteRepository().postGetRealTimeQuotes(null, new ContentPackage.ApiAsyncReturn() {
+        new QuoteRepository().getLatestQuotes("US8969452015","XMUN",new ContentPackage.ApiAsyncReturn() {
             @Override
             public void getPackage(ContentPackage contentPackage) {
-                System.out.println("RealTime: " + ((Quote) contentPackage.getValue()).getAskPrice());
+
+                System.out.println("RealTime1: " + ((Quote) contentPackage.getValue()).getAskPrice());
 
             }
         });
