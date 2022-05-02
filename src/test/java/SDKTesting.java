@@ -150,8 +150,8 @@ public class SDKTesting {
     private static void initTrading() {
         TradingApplication tradingApplication = new TradingApplication.Builder()
                 .setEnvironment(TradingEnvironment.PAPER)
-                .setAccountId("acc_qyGJVBBffhzS3HZw0t2kPQPYHwhdyPngT6")
-                .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJsZW1vbi5tYXJrZXRzIiwiaXNzIjoibGVtb24ubWFya2V0cyIsInN1YiI6InVzcl9xeUdKVkJCZmYzNDVqWkxHTWwxQzhKdGtRTDFoMTM2TW5wIiwiZXhwIjoxNjgwNzk2ODI1LCJpYXQiOjE2NDkyNjA4MjUsImp0aSI6ImFwa19xeUdKVkJCZ2dNS1hxMnBRWVI1MWdITkR5ZzRDdGc5bWRCIiwibW9kZSI6InBhcGVyIn0.SX0XjITYPGIOY-qPyxF_SWXYrrVchbuchJ-dNagFriw");
+                .setAccountId("ACCOUNT")
+                .setToken("TOKEN");
 
     }
 
