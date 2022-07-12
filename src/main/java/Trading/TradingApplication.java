@@ -1,5 +1,6 @@
 package Trading;
 
+import Exceptions.ApplicationNotInstantiated;
 import Order.OrderApiConnection;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,9 +21,15 @@ public class TradingApplication {
     private Retrofit retrofitData;
     public ApiServiceData serviceData;
 
+
+
+
+
+
     public static class Builder{
         private static String BASE_URL = "";
         private final TradingApplication application;
+
 
         public Builder() {
             this.application = new TradingApplication();
