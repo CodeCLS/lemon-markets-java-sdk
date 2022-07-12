@@ -16,12 +16,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class RealtimeConnection {
+    private ArrayList<Runnable> actions = new ArrayList<>();
     private AblyRealtime ably = null;
     private final String id;
     private Channel channel;
+    private Channel allChannel;
+
     private boolean isConnected = false;
 
     public RealtimeConnection(String id, ArrayList<Runnable> actionsToDo) {
+        this.actions = actionsToDo;
         this.id = id;
         try {
             ably = new AblyRealtime("_aarfg.h6_0HQ:huZQgfP8GXpBlX3G");
@@ -59,8 +63,8 @@ public class RealtimeConnection {
     public void subscribeToAllChannels(ContentPackage.ApiAsyncReturn apiAsyncReturn) throws AblyException, RealTimeNotConnected {
         if (!isConnected)
             throw new RealTimeNotConnected(RealTimeNotConnected.message);
-        channel = ably.channels.get(id);
-        channel.subscribe(new Channel.MessageListener() {
+        allChannel = ably.channels.get(id);
+        allChannel.subscribe(new Channel.MessageListener() {
             @Override
             public void onMessage(Message message) {
                 notifyEventOccured(message, apiAsyncReturn);
@@ -90,5 +94,14 @@ public class RealtimeConnection {
         Quote quote = new QuoteConverter().convertJSON(((JsonObject) message.data).toString());
         contentPackage.setValue(quote);
         apiAsyncReturn.getPackage(contentPackage);
+    }
+
+    public void notifyChangeActions() {
+        if (isConnected){
+            for(Runnable runnable: actions){
+                runnable.run();
+            }
+        }
+
     }
 }

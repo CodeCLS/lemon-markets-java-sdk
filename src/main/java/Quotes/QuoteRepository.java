@@ -45,9 +45,11 @@ public class QuoteRepository {
         actionsToDo.add(new Runnable() {
             @Override
             public void run() {
+                System.out.println("RealTime");
                 getRealTimeQuotes(optionalEvents,apiAsyncReturn);
             }
         });
+        realtimeRepo.notifyChangeActions();
     }
 
 }

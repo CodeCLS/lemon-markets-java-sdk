@@ -17,6 +17,7 @@ public class RealtimeRepo {
             if (optionalEvents == null || optionalEvents.length == 0) {
                 realtimeConnection.subscribeToAllChannels(stockApiAsyncReturn);
             } else {
+                System.out.println("Specific channels");
                 realtimeConnection.subscribeToEvent(optionalEvents, stockApiAsyncReturn);
             }
         }
@@ -27,5 +28,9 @@ public class RealtimeRepo {
             stockApiAsyncReturn.getPackage(contentPackage);
         }
 
+    }
+
+    public void notifyChangeActions() {
+        realtimeConnection.notifyChangeActions();
     }
 }

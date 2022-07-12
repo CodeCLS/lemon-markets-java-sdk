@@ -19,24 +19,178 @@ import models.ContentPackage;
 import org.junit.jupiter.api.Order;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SDKTesting {
+
     public static void main(String args[]) {
         initTrading();
         //getStockViaSearch();
         //getPositions();
         //getAccount();
         //getOrders();
-        new QuoteRepository().getLatestQuotes("US8969452015","XMUN",new ContentPackage.ApiAsyncReturn() {
+
+
+        //metaScenario();
+        twitterScenario();
+        //commerzScenario();
+
+
+    }
+    private static void commerzScenario() {
+        new QuoteRepository().postGetRealTimeQuotes(null,new ContentPackage.ApiAsyncReturn() {
+            Quote lastQuote = null;
             @Override
             public void getPackage(ContentPackage contentPackage) {
+                if (System.currentTimeMillis() % 9 != 0){
+                    return;
+                }
+
+
+                Quote quote = ((Quote) contentPackage.getValue());
+                if (!quote.getIsin().equals("DE000CBK1001")){
+                    return;
+                }
+                System.out.println("Commerz");
+                if (lastQuote == null) {
+                    lastQuote = quote;
+
+                    return;
+                }
+                System.out.println(System.currentTimeMillis() +"Difference Volume: " + (quote.getAskVolume() - lastQuote.getBidVolume()) );
+
+                if (quote.getAskVolume() > lastQuote.getBidVolume()){
+                    System.err.println("BUY");
+                    FutureOrder futureOrder = new FutureOrder.Builder()
+                            .setIsin(quote.getIsin())
+                            .setAmountShares(10)
+                            .setExpiresAt(System.currentTimeMillis() + 10000000)
+                            .setSide(Side.BUY)
+                            .setVenue(Venue.ofMic("XMUN"))
+                            .create();
+                    placeOrder(futureOrder);
+                }
+                else if(quote.getAskVolume() < lastQuote.getBidVolume()){
+                    System.err.println("SELL");
+
+                    FutureOrder futureOrder = new FutureOrder.Builder()
+                            .setIsin(quote.getIsin())
+                            .setAmountShares(10)
+                            .setExpiresAt(System.currentTimeMillis() + 10000000)
+                            .setSide(Side.SELL)
+                            .setVenue(Venue.ofMic("XMUN"))
+                            .create();
+                    placeOrder(futureOrder);
+                }
+
 
                 System.out.println("RealTime1: " + ((Quote) contentPackage.getValue()).getAskPrice());
 
             }
         });
+    }
+    private static void twitterScenario() {
+        new QuoteRepository().postGetRealTimeQuotes(null,new ContentPackage.ApiAsyncReturn() {
+            Quote lastQuote = null;
+            @Override
+            public void getPackage(ContentPackage contentPackage) {
+                if (System.currentTimeMillis() % 9 != 0){
+                    return;
+                }
+
+                Quote quote = ((Quote) contentPackage.getValue());
+                if (!quote.getIsin().equals("US90184L1026")){
+                    return;
+                }
+                System.out.println("Twitter");
+                if (lastQuote == null) {
+                    lastQuote = quote;
+
+                    return;
+                }
+                System.out.println(System.currentTimeMillis() +"Difference Volume: " + (quote.getAskVolume() - lastQuote.getBidVolume()) );
+
+                if (quote.getAskVolume() > lastQuote.getBidVolume()){
+                    System.err.println("BUY");
+                    FutureOrder futureOrder = new FutureOrder.Builder()
+                            .setIsin(quote.getIsin())
+                            .setAmountShares(10)
+                            .setExpiresAt(System.currentTimeMillis() + 10000000)
+                            .setSide(Side.BUY)
+                            .setVenue(Venue.ofMic("XMUN"))
+                            .create();
+                    placeOrder(futureOrder);
+                }
+                else if(quote.getAskVolume() < lastQuote.getBidVolume()){
+                    System.err.println("SELL");
+                    FutureOrder futureOrder = new FutureOrder.Builder()
+                            .setIsin(quote.getIsin())
+                            .setAmountShares(10)
+                            .setExpiresAt(System.currentTimeMillis() + 10000000)
+                            .setSide(Side.SELL)
+                            .setVenue(Venue.ofMic("XMUN"))
+                            .create();
+                    placeOrder(futureOrder);
+                }
 
 
+                System.out.println("RealTime1: " + ((Quote) contentPackage.getValue()).getAskPrice());
+
+            }
+        });
+    }
+
+    private static void metaScenario() {
+        new QuoteRepository().postGetRealTimeQuotes(null,new ContentPackage.ApiAsyncReturn() {
+            Quote lastQuote = null;
+            @Override
+            public void getPackage(ContentPackage contentPackage) {
+                if (System.currentTimeMillis() % 9 != 0){
+                    return;
+                }
+
+                Quote quote = ((Quote) contentPackage.getValue());
+                if (!quote.getIsin().equals("US30303M1027")){
+                    return;
+                }
+                System.out.println("meta");
+
+                if (lastQuote == null) {
+                    lastQuote = quote;
+
+                    return;
+                }
+                System.out.println(System.currentTimeMillis() +"Difference Volume: " + (quote.getAskVolume() - lastQuote.getBidVolume()) );
+
+                if (quote.getAskVolume() > lastQuote.getBidVolume()){
+                    System.err.println("BUY");
+                    FutureOrder futureOrder = new FutureOrder.Builder()
+                            .setIsin(quote.getIsin())
+                            .setAmountShares(10)
+                            .setExpiresAt(System.currentTimeMillis() + 10000000)
+                            .setSide(Side.BUY)
+                            .setVenue(Venue.ofMic("XMUN"))
+                            .create();
+                    placeOrder(futureOrder);
+                }
+                else if(quote.getAskVolume() < lastQuote.getBidVolume()){
+                    System.err.println("SELL");
+                    FutureOrder futureOrder = new FutureOrder.Builder()
+                            .setIsin(quote.getIsin())
+                            .setAmountShares(10)
+                            .setExpiresAt(System.currentTimeMillis() + 10000000)
+                            .setSide(Side.SELL)
+                            .setVenue(Venue.ofMic("XMUN"))
+                            .create();
+                    placeOrder(futureOrder);
+                }
+
+
+                System.out.println("RealTime1: " + ((Quote) contentPackage.getValue()).getAskPrice());
+
+            }
+        });
     }
 
     private static void getOrders() {
@@ -86,6 +240,16 @@ public class SDKTesting {
 
             }
         });
+    }public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private static void getStockViaSearch() {
@@ -96,7 +260,7 @@ public class SDKTesting {
                     //CREATE A FUTURE ORDER
 
                     //PLACE ORDER
-                    placeOrder(contentPackage);
+                    //placeOrder(contentPackage);
 
 
                 }
@@ -106,17 +270,11 @@ public class SDKTesting {
         });
     }
 
-    private static void placeOrder(ContentPackage contentPackage) {
-        FutureOrder futureOrder = new FutureOrder.Builder()
-                .setIsin(((Stock)contentPackage.getValue()).getIsin())
-                .setAmountShares(100)
-                .setExpiresAt(System.currentTimeMillis() + 10000000)
-                .setSide(Side.BUY)
-                .setVenue(Venue.ofMic("ALLDAY"))
-                .create();
+    private static void placeOrder(FutureOrder futureOrder) {
         new OrderRepository().placeOrder(futureOrder, new ContentPackage.ApiAsyncReturn() {
             @Override
             public void getPackage(ContentPackage contentPackage) {
+                printBalance();
                 if (contentPackage.getValue() != null) {
                     //ACTIVATE THE PRIOR ORDER
                     activateOrder(contentPackage);
@@ -124,7 +282,8 @@ public class SDKTesting {
 
                 }
                 else{
-                    System.out.println("Failure placing order" + contentPackage.getException().getMessage());
+                    if (contentPackage.getException() != null)
+                        System.err.println("Failure placing order" + contentPackage.getException().getMessage());
 
                 }
 
@@ -138,6 +297,7 @@ public class SDKTesting {
             public void getPackage(ContentPackage contentPackage) {
                 if (contentPackage.getValue() != null) {
                     System.out.println("Activated Order");
+                    printBalance();
                 }
                 else{
                     System.out.println("Failed to activate Order");
@@ -148,11 +308,27 @@ public class SDKTesting {
         });
     }
 
+    private static void printBalance() {
+        new PositionRepository().getPositions(new ContentPackage.ApiAsyncReturn() {
+            @Override
+            public void getPackage(ContentPackage contentPackage) {
+                if (contentPackage.getValue() != null){
+                    ArrayList<Position> positions = ((ArrayList<Position>) contentPackage.getValue());
+                    long sum = 0;
+                    for (Position position: positions){
+                        sum+=position.getBuyPriceAverage()*position.getQuantity();
+                    }
+                    System.err.println("SUM_STOCK: " +sum);
+                }
+            }
+        });
+    }
+
     private static void initTrading() {
         TradingApplication tradingApplication = new TradingApplication.Builder()
                 .setEnvironment(TradingEnvironment.PAPER)
                 .setAccountId("acc_qyGJVBBffhzS3HZw0t2kPQPYHwhdyPngT6")
-                .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJsZW1vbi5tYXJrZXRzIiwiaXNzIjoibGVtb24ubWFya2V0cyIsInN1YiI6InVzcl9xeUdKVkJCZmYzNDVqWkxHTWwxQzhKdGtRTDFoMTM2TW5wIiwiZXhwIjoxNjgwNzk2ODI1LCJpYXQiOjE2NDkyNjA4MjUsImp0aSI6ImFwa19xeUdKVkJCZ2dNS1hxMnBRWVI1MWdITkR5ZzRDdGc5bWRCIiwibW9kZSI6InBhcGVyIn0.SX0XjITYPGIOY-qPyxF_SWXYrrVchbuchJ-dNagFriw");
+                .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJsZW1vbi5tYXJrZXRzIiwiaXNzIjoibGVtb24ubWFya2V0cyIsInN1YiI6InVzcl9xeUdTUVZWZmZMNEZER1BRTHdEMHluRFB4Y1BOSzhQcFdiIiwiZXhwIjoxNjgxNDc0NTg1LCJpYXQiOjE2NDk5Mzg1ODUsImp0aSI6ImFwa19xeUdTUVZWZ2cxRFJuek5rc0RCdHFyUUs3SHE3Sld4TU1RIiwibW9kZSI6InBhcGVyIn0.DzNvc4tIojZCeMjBweaxncPx0cCPRkOFpWxJs0CXKZE");
 
     }
 

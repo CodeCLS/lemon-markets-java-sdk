@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 public class QuoteConverter {
     public Quote convertJSON(String toString) {
-        System.out.println("json: " + toString);
         JSONObject jsonObject = new JSONObject(toString);
         try {
             jsonObject = jsonObject.getJSONArray("results").getJSONObject(0);
