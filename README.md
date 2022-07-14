@@ -2,30 +2,67 @@
 [![](https://jitpack.io/v/CodeCLS/Lemon-Markets-Java-SDK.svg)](https://jitpack.io/#CodeCLS/Lemon-Markets-Java-SDK)
 
 Hey there,
-this SDK is not developed by lemon.markets and the company is not afiliated with me.
-However, I enjoyed the API so much, that I decided to create a simple SDK for Java. 
+I enjoyed the API so much, that I decided to create a simple SDK for Java. 
 I hope you enjoy it.
+
+--Mentioned on their Website: https://docs.lemon.markets/resources/community-sdks --
 
 
 <H3>build.gradle implementation(Jitpack):</H3>
 
+<H4>Jitpack implementation</H4>
+
 ```groovy
+
+Gradle.. 
+
 allprojects {
 repositories {
     maven { url 'https://jitpack.io' }
     }
 }
+```
+
+
+
+```groovy
+
+or...Maven...
+
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
 
 ```
 
+
+<H4>Repo implementation</H4>
+
+
 ```groovy
+Gradle...
 
 dependencies {
     implementation 'com.github.CodeCLS:Lemon-Markets-Java-SDK:1.0.0.0'
 }
-
 ```
-<H3>__Setup Environment & Token__</H3>
+
+
+```groovy
+
+or...Maven...
+
+<dependency>
+	    <groupId>com.github.CodeCLS</groupId>
+	    <artifactId>Lemon-Markets-Java-SDK</artifactId>
+	    <version>Tag</version>
+</dependency>
+```
+
+<H3>Setup Environment & Token</H3>
 
 1. __Choose your environment (Paper/Live)__
 
@@ -38,7 +75,7 @@ TradingEnvironment.LIVE
 2. __Enter your token__
 
 ```java
-   
+
 TradingApplication tradingApplication = new TradingApplication.Builder()
     .setEnvironment(TradingEnvironment.PAPER)
     .setToken("<TOKEN>");
