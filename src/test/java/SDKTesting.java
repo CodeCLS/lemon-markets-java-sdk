@@ -27,27 +27,14 @@ public class SDKTesting {
 
     public static void main(String args[]) {
         initTrading();
-        //getStockViaSearch();
-        //getPositions();
-        //getAccount();
-        //getOrders();
-
-
         commerzScenario();
-        //twitterScenario();
-
-
     }
     private static void commerzScenario() {
         new QuoteRepository().postGetRealTimeQuotes(new String[]{"DE000CBK1001"},new ContentPackage.ApiAsyncReturn() {
             Quote lastQuote = null;
             @Override
             public void getPackage(ContentPackage contentPackage) {
-
-
-
                 Quote quote = ((Quote) contentPackage.getValue());
-
                 System.out.println("Commerz" + quote);
                 if (lastQuote == null) {
                     lastQuote = quote;
@@ -70,103 +57,6 @@ public class SDKTesting {
                 else if(quote.getAskVolume() < lastQuote.getBidVolume()){
                     System.err.println("SELL");
 
-                    FutureOrder futureOrder = new FutureOrder.Builder()
-                            .setIsin(quote.getIsin())
-                            .setAmountShares(10)
-                            .setExpiresAt(System.currentTimeMillis() + 10000000)
-                            .setSide(Side.SELL)
-                            .setVenue(Venue.ofMic("XMUN"))
-                            .create();
-                    placeOrder(futureOrder);
-                }
-
-
-                System.out.println("RealTime1: " + ((Quote) contentPackage.getValue()).getAskPrice());
-
-            }
-        });
-    }
-    private static void twitterScenario() {
-        new QuoteRepository().postGetRealTimeQuotes(null,new ContentPackage.ApiAsyncReturn() {
-            Quote lastQuote = null;
-            @Override
-            public void getPackage(ContentPackage contentPackage) {
-                System.out.println("Twitter I");
-
-                Quote quote = ((Quote) contentPackage.getValue());
-                System.out.println("Twitter");
-                if (lastQuote == null) {
-                    lastQuote = quote;
-
-                    return;
-                }
-                System.out.println(System.currentTimeMillis() +"Difference Volume: " + (quote.getAskVolume() - lastQuote.getBidVolume()) );
-
-                if (quote.getAskVolume() > lastQuote.getBidVolume()){
-                    System.err.println("BUY");
-                    FutureOrder futureOrder = new FutureOrder.Builder()
-                            .setIsin(quote.getIsin())
-                            .setAmountShares(10)
-                            .setExpiresAt(System.currentTimeMillis() + 10000000)
-                            .setSide(Side.BUY)
-                            .setVenue(Venue.ofMic("XMUN"))
-                            .create();
-                    placeOrder(futureOrder);
-                }
-                else if(quote.getAskVolume() < lastQuote.getBidVolume()){
-                    System.err.println("SELL");
-                    FutureOrder futureOrder = new FutureOrder.Builder()
-                            .setIsin(quote.getIsin())
-                            .setAmountShares(10)
-                            .setExpiresAt(System.currentTimeMillis() + 10000000)
-                            .setSide(Side.SELL)
-                            .setVenue(Venue.ofMic("XMUN"))
-                            .create();
-                    placeOrder(futureOrder);
-                }
-
-
-                System.out.println("RealTime1: " + ((Quote) contentPackage.getValue()).getAskPrice());
-
-            }
-        });
-    }
-
-    private static void metaScenario() {
-        new QuoteRepository().postGetRealTimeQuotes(null,new ContentPackage.ApiAsyncReturn() {
-            Quote lastQuote = null;
-            @Override
-            public void getPackage(ContentPackage contentPackage) {
-                if (System.currentTimeMillis() % 9 != 0){
-                    return;
-                }
-
-                Quote quote = ((Quote) contentPackage.getValue());
-                if (!quote.getIsin().equals("US30303M1027")){
-                    return;
-                }
-                System.out.println("meta");
-
-                if (lastQuote == null) {
-                    lastQuote = quote;
-
-                    return;
-                }
-                System.out.println(System.currentTimeMillis() +"Difference Volume: " + (quote.getAskVolume() - lastQuote.getBidVolume()) );
-
-                if (quote.getAskVolume() > lastQuote.getBidVolume()){
-                    System.err.println("BUY");
-                    FutureOrder futureOrder = new FutureOrder.Builder()
-                            .setIsin(quote.getIsin())
-                            .setAmountShares(10)
-                            .setExpiresAt(System.currentTimeMillis() + 10000000)
-                            .setSide(Side.BUY)
-                            .setVenue(Venue.ofMic("XMUN"))
-                            .create();
-                    placeOrder(futureOrder);
-                }
-                else if(quote.getAskVolume() < lastQuote.getBidVolume()){
-                    System.err.println("SELL");
                     FutureOrder futureOrder = new FutureOrder.Builder()
                             .setIsin(quote.getIsin())
                             .setAmountShares(10)
@@ -231,16 +121,6 @@ public class SDKTesting {
 
             }
         });
-    }public static void wait(int ms)
-    {
-        try
-        {
-            Thread.sleep(ms);
-        }
-        catch(InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
-        }
     }
 
     private static void getStockViaSearch() {
@@ -318,8 +198,8 @@ public class SDKTesting {
     private static void initTrading() {
         TradingApplication tradingApplication = new TradingApplication.Builder()
                 .setEnvironment(TradingEnvironment.PAPER)
-                .setAccountId("acc_qyGJVBBffhzS3HZw0t2kPQPYHwhdyPngT6")
-                .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJsZW1vbi5tYXJrZXRzIiwiaXNzIjoibGVtb24ubWFya2V0cyIsInN1YiI6InVzcl9xeUdTUVZWZmZMNEZER1BRTHdEMHluRFB4Y1BOSzhQcFdiIiwiZXhwIjoxNjgxNDc0NTg1LCJpYXQiOjE2NDk5Mzg1ODUsImp0aSI6ImFwa19xeUdTUVZWZ2cxRFJuek5rc0RCdHFyUUs3SHE3Sld4TU1RIiwibW9kZSI6InBhcGVyIn0.DzNvc4tIojZCeMjBweaxncPx0cCPRkOFpWxJs0CXKZE");
+                .setAccountId("...")
+                .setToken("...");
 
         ContentPackage contentPackage = null;
         try {
