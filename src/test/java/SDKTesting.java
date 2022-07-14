@@ -1,5 +1,6 @@
 import Account.Account;
 import Account.AccountRepository;
+import Exceptions.UnsuccessfulException;
 import Order.OrderRepository;
 import Order.OrderTypes.FutureOrder;
 import Order.OrderTypes.PlacedOrder;
@@ -32,27 +33,22 @@ public class SDKTesting {
         //getOrders();
 
 
-        //metaScenario();
-        twitterScenario();
-        //commerzScenario();
+        commerzScenario();
+        //twitterScenario();
 
 
     }
     private static void commerzScenario() {
-        new QuoteRepository().postGetRealTimeQuotes(null,new ContentPackage.ApiAsyncReturn() {
+        new QuoteRepository().postGetRealTimeQuotes(new String[]{"DE000CBK1001"},new ContentPackage.ApiAsyncReturn() {
             Quote lastQuote = null;
             @Override
             public void getPackage(ContentPackage contentPackage) {
-                if (System.currentTimeMillis() % 9 != 0){
-                    return;
-                }
+
 
 
                 Quote quote = ((Quote) contentPackage.getValue());
-                if (!quote.getIsin().equals("DE000CBK1001")){
-                    return;
-                }
-                System.out.println("Commerz");
+
+                System.out.println("Commerz" + quote);
                 if (lastQuote == null) {
                     lastQuote = quote;
 
@@ -95,14 +91,9 @@ public class SDKTesting {
             Quote lastQuote = null;
             @Override
             public void getPackage(ContentPackage contentPackage) {
-                if (System.currentTimeMillis() % 9 != 0){
-                    return;
-                }
+                System.out.println("Twitter I");
 
                 Quote quote = ((Quote) contentPackage.getValue());
-                if (!quote.getIsin().equals("US90184L1026")){
-                    return;
-                }
                 System.out.println("Twitter");
                 if (lastQuote == null) {
                     lastQuote = quote;
@@ -329,6 +320,15 @@ public class SDKTesting {
                 .setEnvironment(TradingEnvironment.PAPER)
                 .setAccountId("acc_qyGJVBBffhzS3HZw0t2kPQPYHwhdyPngT6")
                 .setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJsZW1vbi5tYXJrZXRzIiwiaXNzIjoibGVtb24ubWFya2V0cyIsInN1YiI6InVzcl9xeUdTUVZWZmZMNEZER1BRTHdEMHluRFB4Y1BOSzhQcFdiIiwiZXhwIjoxNjgxNDc0NTg1LCJpYXQiOjE2NDk5Mzg1ODUsImp0aSI6ImFwa19xeUdTUVZWZ2cxRFJuek5rc0RCdHFyUUs3SHE3Sld4TU1RIiwibW9kZSI6InBhcGVyIn0.DzNvc4tIojZCeMjBweaxncPx0cCPRkOFpWxJs0CXKZE");
+
+        ContentPackage contentPackage = null;
+        try {
+            contentPackage = RealtimeRepo.getRealTimeAuthToken();
+        } catch (UnsuccessfulException e) {
+            e.printStackTrace();
+        }
+        tradingApplication.setRealtimeAuthToken((String)contentPackage.getValue());
+
 
     }
 

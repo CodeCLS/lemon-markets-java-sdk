@@ -17,7 +17,7 @@ public class QuoteRepository {
             System.err.println("Please instantiate the TradingApplication before calling this or any other class.");
             return;
         }
-        realtimeRepo = new RealtimeRepo(TradingApplication.account,actionsToDo);
+        realtimeRepo = new RealtimeRepo(TradingApplication.instance.getAblyUid(),actionsToDo);
         connection = new QuoteApiConnection();
     }
     public void getRealTimeQuotes(String[] optionalEvents, ContentPackage.ApiAsyncReturn stockApiAsyncReturn){
