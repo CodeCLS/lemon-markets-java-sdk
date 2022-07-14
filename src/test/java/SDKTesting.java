@@ -324,8 +324,10 @@ public class SDKTesting {
         ContentPackage contentPackage = null;
         try {
             contentPackage = RealtimeRepo.getRealTimeAuthToken();
+            System.out.println("Contentpackage: " + (String)contentPackage.getValue());
         } catch (UnsuccessfulException e) {
             e.printStackTrace();
+
         }
         tradingApplication.setRealtimeAuthToken((String)contentPackage.getValue());
 

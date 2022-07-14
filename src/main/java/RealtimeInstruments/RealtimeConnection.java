@@ -122,6 +122,7 @@ public class RealtimeConnection {
         subscriptionChannel.publish("isins", events, new CompletionListener() {
             @Override
             public void onSuccess() {
+
             }
 
             @Override
@@ -165,7 +166,7 @@ public class RealtimeConnection {
                         System.out.println("val: " + val);
                         contentPackage.setValue(new JSONObject(val).get("token").toString());
                         TradingApplication.instance.setRealtimeAblyUid(new JSONObject(val).get("user_id").toString());
-
+                        System.out.println("AblyUID: " + TradingApplication.instance.getAblyUid());
                     } catch (IOException e) {
                         contentPackage.setException(e);
                         e.printStackTrace();
