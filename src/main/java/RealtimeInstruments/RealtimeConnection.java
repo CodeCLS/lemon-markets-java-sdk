@@ -18,6 +18,7 @@ import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RealtimeConnection {
     private String token;
@@ -43,8 +44,8 @@ public class RealtimeConnection {
             ably = new AblyRealtime(options);
             System.out.println("Subscribe to event " + channel);
 
-            channel = ably.channels.get(id);
             try {
+                channel = ably.channels.get(id);
                 channel.subscribe(new Channel.MessageListener() {
                     @Override
                     public void onMessage(Message message) {
@@ -54,7 +55,14 @@ public class RealtimeConnection {
                         notifyEventOccurred(message, realTimeListener);
                     }
                 });
+                channel.on(new ChannelStateListener() {
+                    @Override
+                    public void onChannelStateChanged(ChannelStateChange stateChange) {
+
+                    }
+                });
                 startListener(actionsToDo);
+
 
             } catch (AblyException exception) {
                 exception.printStackTrace();
@@ -117,9 +125,10 @@ public class RealtimeConnection {
     }
     public void subscribeToEvent(String[] events,ContentPackage.ApiAsyncReturn apiAsyncReturn) throws AblyException, RealTimeNotConnected {
         realTimeListener = apiAsyncReturn;
+        String eventString = Arrays.toString(events).replaceAll("[ \\[\\]]", "");
         if (!isConnected)
             throw new RealTimeNotConnected(RealTimeNotConnected.message);
-        subscriptionChannel.publish("isins", events, new CompletionListener() {
+        subscriptionChannel.publish("isins", eventString, new CompletionListener() {
             @Override
             public void onSuccess() {
 
