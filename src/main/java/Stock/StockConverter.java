@@ -13,12 +13,12 @@ public class StockConverter {
         JSONObject jsonObject1 = jsonArray.optJSONObject(0);
         return new Stock.Builder()
                 .setIsin(jsonObject1.getString("isin"))
-                .setWkn(jsonObject1.getString("wkn"))
-                .setName(jsonObject1.getString("name"))
-                .setTitle(jsonObject1.getString("title"))
-                .setSymbol(jsonObject1.getString("symbol"))
-                .setType(jsonObject1.getString("type"))
-                .setVenues(new VenueConverter().convertJSONArray(jsonObject1.getJSONArray("venues")))
+                .setWkn(!jsonObject1.has("wkn") ? "" : jsonObject1.getString("wkn"))
+                .setName(!jsonObject1.has("name")? "" : jsonObject1.getString("name"))
+                .setTitle(!jsonObject1.has("title") ? "" : jsonObject1.getString("title"))
+                .setSymbol(!jsonObject1.has("symbol") ? " " : jsonObject1.getString("symbol"))
+                .setType(!jsonObject1.has("type") ? " " : jsonObject1.getString("type"))
+                .setVenues(!jsonObject1.has("venues") ? null : new VenueConverter().convertJSONArray(jsonObject1.getJSONArray("venues")))
                .create();
 
 

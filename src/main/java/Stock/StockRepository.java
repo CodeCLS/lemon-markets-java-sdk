@@ -22,5 +22,25 @@ public class StockRepository {
             e.printStackTrace();
         }
     }
+    public void getStockViaWkn(String searchQueryValue, ContentPackage.ApiAsyncReturn stockApiAsyncReturn){
+        try {
+            connection.getStockViaWkn(searchQueryValue,stockApiAsyncReturn);
+        } catch (Exception e) {
+            ContentPackage contentPackage = new ContentPackage();
+            contentPackage.setException(e);
+            stockApiAsyncReturn.getPackage(contentPackage);
+            e.printStackTrace();
+        }
+    }
+    public void getStockViaIsin(String searchQueryValue, ContentPackage.ApiAsyncReturn stockApiAsyncReturn){
+        try {
+            connection.getStockViaIsin(searchQueryValue,stockApiAsyncReturn);
+        } catch (Exception e) {
+            ContentPackage contentPackage = new ContentPackage();
+            contentPackage.setException(e);
+            stockApiAsyncReturn.getPackage(contentPackage);
+            e.printStackTrace();
+        }
+    }
 
 }
