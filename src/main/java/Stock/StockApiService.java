@@ -14,4 +14,7 @@ public interface StockApiService {
             "Accept: application/json",
     })
     Call<ResponseBody> getStockViaSearch(@Query("search") String search, @Header("Authorization") String authorization);
+    Call<ResponseBody> getStockViaIsin(@Query("isin") String search, @Header("Authorization") String authorization);
+    Call<ResponseBody> getStockViaWkn(@Query("wkn") String search, @Header("Authorization") String authorization);
+
 }

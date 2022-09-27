@@ -6,6 +6,7 @@ plugins {
     id 'ivy-publish'
 
 
+
     //id 'java'
 }
 mainClassName = 'TradingApplication'
@@ -16,6 +17,7 @@ version '1.0.0.5'
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io"  }
+    maven { url "https://www.jitpack.io"  }
 
 }
 

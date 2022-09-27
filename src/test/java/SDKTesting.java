@@ -27,7 +27,8 @@ public class SDKTesting {
 
     public static void main(String args[]) {
         initTrading();
-        commerzScenario();
+        //commerzScenario();
+        getStockViaSearch();
     }
     private static void commerzScenario() {
         new QuoteRepository().postGetRealTimeQuotes(new String[]{"DE000CBK1001"},new ContentPackage.ApiAsyncReturn() {
@@ -124,10 +125,11 @@ public class SDKTesting {
     }
 
     private static void getStockViaSearch() {
-        new StockRepository().getStockViaSearch("Coinbase", new ContentPackage.ApiAsyncReturn() {
+        new StockRepository().getStockViaIsin("US02079K1079", new ContentPackage.ApiAsyncReturn() {
             @Override
             public void getPackage(ContentPackage contentPackage) {
                 if (contentPackage.getValue() != null) {
+                    System.out.println("Contentpackage " + contentPackage + " " +((Stock)contentPackage.getValue()).getIsin() + " " );
                     //CREATE A FUTURE ORDER
 
                     //PLACE ORDER
